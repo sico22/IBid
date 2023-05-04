@@ -57,7 +57,7 @@ namespace IBid.PL.Controllers
         {
             ClaimsPrincipal claimsUser = HttpContext.User;
             if (claimsUser.Identity.IsAuthenticated)
-                return RedirectToAction("ShowVolunteers", "Admin");
+                return RedirectToAction("ShowBids", "Volunteer");
             return View();
         }
 
@@ -81,7 +81,7 @@ namespace IBid.PL.Controllers
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
                     new ClaimsPrincipal(identity), properties);
 
-                return RedirectToAction("ShowVolunteers", "Admin");
+                return RedirectToAction("ShowBids", "Volunteer");
             }
 
             ViewData["ValidateMessage"] = "user not found";
@@ -108,7 +108,7 @@ namespace IBid.PL.Controllers
 
                 await _authenticationService.SignUpVolunteer(newVolunteer);
                 VolunteerLogin(new VMLogin { Email = username, Password = password });
-                return RedirectToAction("ShowVolunteers", "Admin");
+                return RedirectToAction("ShowBids", "Volunteer");
 
             }
             catch

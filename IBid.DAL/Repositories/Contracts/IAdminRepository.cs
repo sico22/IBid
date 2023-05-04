@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 using IBid.DAL.Models;
 
-namespace IBid.BLL.Services.Contracts
+namespace IBid.DAL.Repositories.Contracts
 {
-    public interface IAdminService
+    public interface IAdminRepository<TModel> where TModel : class
     {
         Task<List<Admin>> GetAllAdmins();
 

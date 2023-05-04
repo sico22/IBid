@@ -13,5 +13,7 @@ public partial class Volunteer
 
     public string Name { get; set; } = null!;
 
+    public virtual ICollection<BidHistory> BidHistories { get; set; } = new List<BidHistory>();
+
     public virtual ICollection<Bid> Bids { get; set; } = new List<Bid>();
 }

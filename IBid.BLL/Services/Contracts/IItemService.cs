@@ -6,15 +6,14 @@ using System.Threading.Tasks;
 
 using IBid.DAL.Models;
 
-namespace IBid.DAL.Repositories.Contracts
+namespace IBid.BLL.Services.Contracts
 {
-    public interface IItemRepository<TModel> where TModel : class
+    public interface IItemService
     {
-        Task<Item> GetItemById(int id);
         Task<List<Item>> GetAllItems();
+        Task<Item> GetItemById(int id);
         Task<Item> CreateItem(Item newItem);
-        Task UpdateItem(Item item);
         Task DeleteItem(int itemId);
-
+        Task EditItem(int id, string name, string description);
     }
 }

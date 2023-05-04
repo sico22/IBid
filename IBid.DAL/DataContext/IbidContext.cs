@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
-
 using IBid.DAL.Models;
 
 namespace IBid.DAL.DataContext;
@@ -21,11 +20,15 @@ public partial class IbidContext : DbContext
 
     public virtual DbSet<Bid> Bids { get; set; }
 
+    public virtual DbSet<BidHistory> BidHistories { get; set; }
+
     public virtual DbSet<Item> Items { get; set; }
 
     public virtual DbSet<Volunteer> Volunteers { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) { }
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+        => optionsBuilder.UseSqlServer("Server=LAPTOP-4MRU1IFH; DataBase=IBid;Integrated Security=true ;Trust Server Certificate=true");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -73,6 +76,31 @@ public partial class IbidContext : DbContext
                 .HasForeignKey(d => d.VolunteerId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__Bids__volunteerI__403A8C7D");
+        });
+
+        modelBuilder.Entity<BidHistory>(entity =>
+        {
+            entity.HasKey(e => e.BidHistoryId).HasName("PK__BidHisto__AA2EB344AE62D4C0");
+
+            entity.ToTable("BidHistory");
+
+            entity.Property(e => e.BidHistoryId).HasColumnName("bidHistoryId");
+            entity.Property(e => e.BidAmount).HasColumnName("bidAmount");
+            entity.Property(e => e.BidId).HasColumnName("bidId");
+            entity.Property(e => e.BidTime)
+                .HasColumnType("date")
+                .HasColumnName("bidTime");
+            entity.Property(e => e.VolunteerId).HasColumnName("volunteerId");
+
+            entity.HasOne(d => d.Bid).WithMany(p => p.BidHistories)
+                .HasForeignKey(d => d.BidId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__BidHistor__bidId__4D94879B");
+
+            entity.HasOne(d => d.Volunteer).WithMany(p => p.BidHistories)
+                .HasForeignKey(d => d.VolunteerId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__BidHistor__volun__4E88ABD4");
         });
 
         modelBuilder.Entity<Item>(entity =>

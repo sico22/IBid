@@ -25,8 +25,16 @@ builder.Services.AddDbContext<IbidContext>(options =>
 
 builder.Services.AddTransient(typeof(IAuthenticationRepository<>), typeof(AuthenticationRepository<>));
 builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
+builder.Services.AddTransient(typeof(IAdminRepository<>), typeof(AdminRepository<>));
+builder.Services.AddScoped<IAdminService, AdminService>();
 builder.Services.AddTransient(typeof(IVolunteerRepository<>), typeof(VolunteerRepository<>));
 builder.Services.AddScoped<IVolunteerService, VolunteerService>();
+builder.Services.AddTransient(typeof(IItemRepository<>), typeof(ItemRepository<>));
+builder.Services.AddScoped<IItemService, ItemService>();
+builder.Services.AddTransient(typeof(IBidRepository<>), typeof(BidRepository<>));
+builder.Services.AddScoped<IBidService, BidService>();
+builder.Services.AddTransient(typeof(IBidHistoryRepository<>), typeof(BidHistoryRepository<>));
+builder.Services.AddScoped<IBidHistoryService, BidHistoryService>();
 
 
 var app = builder.Build();

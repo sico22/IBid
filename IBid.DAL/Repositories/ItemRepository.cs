@@ -11,20 +11,20 @@ using Microsoft.EntityFrameworkCore;
 
 namespace IBid.DAL.Repositories
 {
-    public class ItemRepository<TModel> : IItemRepository<TModel> where TModel: class
+    public class BidRepository<TModel> : IBidRepository<TModel> where TModel: class
     {
         private readonly IbidContext _dbContext;
 
-        public ItemRepository(IbidContext dbContext)
+        public BidRepository(IbidContext dbContext)
         {
             _dbContext = dbContext;
         }
 
-        public async Task<List<Item>> GetAllItems()
+        public async Task<List<Bid>> GetAllBids()
         {
             try
             {
-                return await _dbContext.Set<Item>().ToListAsync();
+                return await _dbContext.Set<Bid>().ToListAsync();
             }
             catch
             {
@@ -32,27 +32,34 @@ namespace IBid.DAL.Repositories
             }
         }
 
-        public async Task<Item> GetItemById(int id)
+        public async Task<Bid> GetBidById(int id)
         {
-            return await _dbContext.Items.FindAsync(id);
+            return await _dbContext.Bids.FindAsync(id);
         }
 
-        public async Task UpdateItem(Item item)
+        public async Task<Bid> CreateBid(Bid newBid)
+        {
+            await _dbContext.Bids.AddAsync(newBid);
+            await _dbContext.SaveChangesAsync();
+            return newBid;
+        }
+
+        public async Task UpdateBid(Bid bid)
         { 
-            _dbContext.Items.Update(item);
+            _dbContext.Bids.Update(bid);
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task DeleteItem(int itemId)
+        public async Task DeleteBid(int bidId)
         {
-            var item = await _dbContext.Items.FindAsync(itemId);
+            var bid = await _dbContext.Bids.FindAsync(bidId);
 
-            if (item== null)
+            if (bid== null)
             {
-                throw new ArgumentException($"Item with id {itemId} does not exist.");
+                throw new ArgumentException($"Bid with id {bidId} does not exist.");
             }
 
-            _dbContext.Items.Remove(item);
+            _dbContext.Bids.Remove(bid);
             await _dbContext.SaveChangesAsync();
         }
     }

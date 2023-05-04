@@ -19,6 +19,8 @@ public partial class Bid
 
     public DateTime EndTime { get; set; }
 
+    public virtual ICollection<BidHistory> BidHistories { get; set; } = new List<BidHistory>();
+
     public virtual Item Item { get; set; } = null!;
 
     public virtual Volunteer Volunteer { get; set; } = null!;
