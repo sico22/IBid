@@ -8,6 +8,7 @@ using IBid.DAL.Models;
 using IBid.DAL.Repositories.Contracts;
 using IBid.BLL.Services.Contracts;
 using IBid.DAL.Repositories;
+using IBid.DAL;
 
 namespace IBid.BLL.Services
 {
@@ -45,6 +46,12 @@ namespace IBid.BLL.Services
         {
             try
             {
+               if(newBid.EndTime < newBid.StartTime)
+                    throw new ArgumentException(ConstantStrings.wrongDatesConfiguration);
+
+                if (newBid.StartingPrice < 0)
+                    throw new ArgumentException(ConstantStrings.startingPriceGreaterThan0);
+
                 return await _bidRepository.CreateBid(newBid);
             }
             catch
@@ -65,7 +72,7 @@ namespace IBid.BLL.Services
 
             if (bid == null)
             {
-                throw new ArgumentException("Bid not found");
+                throw new ArgumentException(ConstantStrings.bidNotFound);
             }
 
             bid.BidId = id;
@@ -85,7 +92,17 @@ namespace IBid.BLL.Services
 
             if (bid == null)
             {
-                throw new ArgumentException("Bid not found");
+                throw new ArgumentException(ConstantStrings.bidNotFound);
+            }
+
+            if(bid.CurrentPrice == 0 && currentPrice < bid.StartingPrice)
+            {
+                throw new ArgumentException(ConstantStrings.newPriceGreaterThanStartingPrice);
+            }
+
+            if(currentPrice <= bid.CurrentPrice)
+            {
+                throw new ArgumentException(ConstantStrings.newPriceGreaterThanCurrentPrice);
             }
 
             bid.BidId = id;
@@ -103,12 +120,12 @@ namespace IBid.BLL.Services
 
             if (bidHistory == null)
             {
-                throw new ArgumentException("This bid has no early history");
+                throw new ArgumentException(ConstantStrings.bidHasNoEarlyHistory);
             }
 
             if (bid == null)
             {
-                throw new ArgumentException("Bid not found");
+                throw new ArgumentException(ConstantStrings.bidNotFound);
             }
 
             bid.CurrentPrice = bidHistory.BidAmount;

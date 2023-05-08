@@ -56,7 +56,7 @@ namespace IBid.DAL.Repositories
 
             if (bid== null)
             {
-                throw new ArgumentException($"Bid with id {bidId} does not exist.");
+                throw new ArgumentException(string.Format(ConstantStrings.bidNotFoundId, bidId));
             }
 
             _dbContext.Bids.Remove(bid);

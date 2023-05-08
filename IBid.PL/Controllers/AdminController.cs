@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 
 using IBid.DAL.Models;
 using IBid.BLL.Services.Contracts;
-
+using IBid.DAL;
 
 namespace IBid.PL.Controllers
 {
@@ -101,7 +101,7 @@ namespace IBid.PL.Controllers
             }
             catch
             {
-                return StatusCode(StatusCodes.Status401Unauthorized, new { message = "Not all fields completed" });
+                return StatusCode(StatusCodes.Status401Unauthorized, new { ConstantStrings.notAllFieldsCompleted });
             }
         }
 
@@ -176,7 +176,7 @@ namespace IBid.PL.Controllers
             }
             catch
             {
-                return StatusCode(StatusCodes.Status401Unauthorized, new { message = "Not all fields completed" });
+                return StatusCode(StatusCodes.Status401Unauthorized, new { ConstantStrings.notAllFieldsCompleted });
             }
         }
 
@@ -193,24 +193,20 @@ namespace IBid.PL.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> CreateBid(int itemId, int volunteerId, int startingPrice, int currentPrice, DateTime startTime, DateTime endTime)
+        public async Task<ActionResult> CreateBid(int itemId, int startingPrice, DateTime startTime, DateTime endTime)
         {
             var item = _itemService.GetItemById(itemId);
-            var volunteer = _volunteerService.GetVolunteerById(volunteerId);
 
             if(item == null)
-                return StatusCode(StatusCodes.Status401Unauthorized, new { message = "No item with this id was found" });
-            if (volunteer == null)
-                return StatusCode(StatusCodes.Status401Unauthorized, new { message = "No volunteer with this id was found" });
+                return StatusCode(StatusCodes.Status401Unauthorized, new { message = ConstantStrings.notAllFieldsCompleted });
+            
 
             try
             {
                 Bid newBid = new Bid
                 {
                     ItemId = itemId,
-                    VolunteerId = volunteerId,
                     StartingPrice = startingPrice,
-                    CurrentPrice = currentPrice,
                     StartTime = startTime,
                     EndTime = endTime
                 };
@@ -262,7 +258,7 @@ namespace IBid.PL.Controllers
             }
             catch
             {
-                return StatusCode(StatusCodes.Status401Unauthorized, new { message = "Not all fields completed" });
+                return StatusCode(StatusCodes.Status401Unauthorized, new { message = ConstantStrings.notAllFieldsCompleted });
             }
         }
 

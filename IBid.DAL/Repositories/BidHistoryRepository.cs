@@ -56,7 +56,7 @@ namespace IBid.DAL.Repositories
 
             if (bidHistory== null)
             {
-                throw new ArgumentException($"BidHistory with id {bidHistoryId} does not exist.");
+                throw new ArgumentException(string.Format(ConstantStrings.bidHistoryNotFoundId, bidHistory));
             }
 
             _dbContext.BidHistories.Remove(bidHistory);

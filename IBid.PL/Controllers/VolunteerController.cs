@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 
 using IBid.DAL.Models;
 using IBid.BLL.Services.Contracts;
-
+using IBid.DAL;
 
 namespace IBid.PL.Controllers
 {
@@ -73,7 +73,7 @@ namespace IBid.PL.Controllers
             {
                 var admins = await _adminService.GetAllAdmins();
                 var emailObserver = new EmailBidObserver(admins);
-                var logObserver = new LogBidObserver("D:/UTCN/Anul 3/Semestrul 2/SD/IBid/LogEvent.txt");
+                var logObserver = new LogBidObserver(ConstantStrings.logPath);
                 _bidService.Subscribe(emailObserver);
                 _bidService.Subscribe(logObserver);
 
@@ -83,7 +83,7 @@ namespace IBid.PL.Controllers
             }
             catch
             {
-                return StatusCode(StatusCodes.Status401Unauthorized, new { message = "Not all fields completed" });
+                return StatusCode(StatusCodes.Status401Unauthorized, new { message = ConstantStrings.notAllFieldsCompleted });
             }
         }
 

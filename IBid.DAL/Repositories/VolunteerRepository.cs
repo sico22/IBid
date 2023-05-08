@@ -8,6 +8,7 @@ using IBid.DAL.DataContext;
 using IBid.DAL.Models;
 using IBid.DAL.Repositories.Contracts;
 using Microsoft.EntityFrameworkCore;
+using IBid.DAL;
 
 namespace IBid.DAL.Repositories
 {
@@ -49,7 +50,7 @@ namespace IBid.DAL.Repositories
 
             if (volunteer == null)
             {
-                throw new ArgumentException($"Performance with id {volunteerId} does not exist.");
+                throw new ArgumentException(string.Format(ConstantStrings.volunteerNotFoundId, volunteerId));
             }
 
             _dbContext.Volunteers.Remove(volunteer);

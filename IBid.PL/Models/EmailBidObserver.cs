@@ -1,4 +1,5 @@
-﻿using IBid.DAL.Models;
+﻿using IBid.DAL;
+using IBid.DAL.Models;
 using System.Net;
 using System.Net.Mail;
 
@@ -26,16 +27,16 @@ namespace IBid.PL.Models
         public void OnNext(Bid bid)
         {
             
-            string message = $"New bid of {bid.CurrentPrice:C} placed on auction {bid.BidId}";
+            string message = string.Format(ConstantStrings.newBidPlacedOnAuction, bid.CurrentPrice, bid.BidId);
             foreach (Admin admin in admins)
-                SendEmail(admin.Username, "New Bid Placed", message);
+                SendEmail(admin.Username, ConstantStrings.newBidPlaced, message);
         }
 
         public void SendEmail(string email, string subject, string body)
         {
-            string sender = "alexandra.sicobean@gmail.com";
-            string password = "rsrzyiphxophrxqa";
-            string smtpHost = "smtp.gmail.com";
+            string sender = ConstantStrings.sender;
+            string password = ConstantStrings.password;
+            string smtpHost = ConstantStrings.smtpHost;
             int smtpPort = 587;
             using (var message = new MailMessage(sender, email))
             {

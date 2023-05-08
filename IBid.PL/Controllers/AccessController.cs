@@ -7,6 +7,7 @@ using IBid.PL.Models;
 
 using IBid.DAL.Models;
 using IAuthenticationService = IBid.BLL.Services.Contracts.IAuthenticationService;
+using IBid.DAL;
 
 namespace IBid.PL.Controllers
 {
@@ -49,7 +50,7 @@ namespace IBid.PL.Controllers
                 return RedirectToAction("ShowVolunteers", "Admin");
             }
 
-            ViewData["ValidateMessage"] = "user not found";
+            ViewData["ValidateMessage"] = ConstantStrings.userNotFound;
             return View();
         }
 
@@ -84,7 +85,7 @@ namespace IBid.PL.Controllers
                 return RedirectToAction("ShowBids", "Volunteer");
             }
 
-            ViewData["ValidateMessage"] = "user not found";
+            ViewData["ValidateMessage"] = ConstantStrings.userNotFound;
             return View();
         }
 
@@ -113,7 +114,7 @@ namespace IBid.PL.Controllers
             }
             catch
             {
-                return StatusCode(StatusCodes.Status401Unauthorized, new { message = "Not all fields were completed" });
+                return StatusCode(StatusCodes.Status401Unauthorized, new { message = ConstantStrings.notAllFieldsCompleted });
             }
         }
     }

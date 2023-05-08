@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using IBid.DAL.Models;
 using IBid.DAL.Repositories.Contracts;
 using IBid.BLL.Services.Contracts;
+using IBid.DAL;
 
 namespace IBid.BLL.Services
 {
@@ -60,7 +61,7 @@ namespace IBid.BLL.Services
 
             if (item == null)
             {
-                throw new ArgumentException("Student not found");
+                throw new ArgumentException(ConstantStrings.itemNotFound);
             }
 
             item.ItemId = id;

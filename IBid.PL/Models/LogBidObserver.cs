@@ -1,4 +1,5 @@
-﻿using IBid.DAL.Models;
+﻿using IBid.DAL;
+using IBid.DAL.Models;
 
 namespace IBid.PL.Models
 {
@@ -23,7 +24,7 @@ namespace IBid.PL.Models
 
         public void OnNext(Bid bid)
         {
-            string logMessage = $"[{DateTime.Now}] New bid of {bid.CurrentPrice:C} placed on auction {bid.BidId}{Environment.NewLine}";
+            string logMessage = string.Format(ConstantStrings.logMessage, DateTime.Now, bid.CurrentPrice, bid.BidId, Environment.NewLine);
             File.AppendAllText(logFilePath, logMessage);
         }
     }

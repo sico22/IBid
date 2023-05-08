@@ -8,3 +8,7 @@
 [5/3/2023 9:40:12 AM] New bid of $100.00 placed on auction 2
 [5/4/2023 5:36:53 PM] New bid of $120.00 placed on auction 2
 [5/4/2023 5:38:11 PM] New bid of $140.00 placed on auction 2
+[5/8/2023 8:47:37 PM] New bid of $30.00 placed on auction 1
+[5/8/2023 8:47:48 PM] New bid of $30.00 placed on auction 2
+[5/8/2023 9:37:20 PM] New bid of $35.00 placed on auction 1
+[5/8/2023 9:51:04 PM] New bid of $40.00 placed on auction 1
